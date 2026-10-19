@@ -57,14 +57,12 @@ space), drag the extracted OpenMB-source-dev1 folder into Terminal and press
 Return. Then run:
 
 ```sh
+set -o pipefail
 bash scripts/build_test_drop.sh 2>&1 | tee mac-build.log
 ```
 
-Read the terminal output: the pipe above saves a log but can conceal a failing
-script's exit status in some shells; success requires the final `Created unsigned
-development DMG` message and manifest, not merely a zero status from tee.
-For an exit status preserving invocation use `bash scripts/build_test_drop.sh`
-directly instead.
+Success requires the final `Created unsigned development DMG` message and manifest.
+The pipefail option preserves failure status while tee saves the log.
 
 The script fetches JUCE 7.0.12, builds the native AU and tests, checks the actual
 binary's deployment target, and ad-hoc signs the AU. When prompted, type VALIDATE
